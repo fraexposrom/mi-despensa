@@ -1,7 +1,7 @@
 {
-  "name": "Mi despensa",
-  "short_name": "Despensa",
-  "description": "Lo que tienes en casa, dónde está, qué caduca y qué falta comprar.",
+  "name": "Mi Despensa",
+  "short_name": "Mi Despensa",
+  "description": "Lo que tienes en casa, dónde está, qué caduca y qué cocinar con ello.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

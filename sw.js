@@ -1,5 +1,5 @@
-/* Mi despensa · service worker: la app abre sin conexión y se actualiza sola. */
-const CACHE = 'mi-despensa-v1';
+/* Mi Despensa · service worker: la app abre sin conexión y se actualiza sola. */
+const CACHE = 'mi-despensa-v2';
 const SHELL = ['./', './index.html', './app.js', './manifest.webmanifest', './favicon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

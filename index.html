@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
-<title>Mi despensa</title>
-<meta name="description" content="Lo que tienes en casa, dónde está, qué caduca y qué falta comprar.">
+<title>Mi Despensa</title>
+<meta name="description" content="Lo que tienes en casa, dónde está, qué caduca y qué cocinar con ello.">
 <meta name="theme-color" content="#F3F5EE" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111510" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Despensa">
+<meta name="apple-mobile-web-app-title" content="Mi Despensa">
+<meta name="application-name" content="Mi Despensa">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -62,7 +63,10 @@ h2{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0;text-wra
 .sync[data-s="ok"] i{background:var(--ok)}
 .sync[data-s="saving"] i{background:var(--warn)}
 .sync[data-s="error"] i,.sync[data-s="offline"] i{background:var(--danger)}
-.me{font-size:12.5px;color:var(--muted);text-align:right}
+.hbtn{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:58px;min-height:48px;padding:6px 10px;font-size:11.5px;font-weight:700;color:var(--muted)}
+.hbtn svg{width:22px;height:22px}
+.hbtn[aria-current="page"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.back{margin-top:10px}
 
 /* resumen */
 .summary{background:var(--ink);color:var(--bg);border-radius:18px;padding:16px 18px;margin-top:16px}
@@ -111,16 +115,61 @@ h2{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0;text-wra
 .btn.sm{padding:9px 14px;font-size:14px;border-radius:10px}
 .linkbtn{background:none;border:0;color:var(--accent);font-weight:700;padding:6px 0;font-size:14px}
 
-/* lista */
-.check{display:flex;align-items:center;gap:12px;padding:12px 4px;border:0;border-bottom:1px solid var(--line);width:100%;background:none;text-align:left}
-.box{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);flex:none;background:var(--surface)}
-.check .main{flex:1;min-width:0}
-.check small{color:var(--muted);font-size:12.5px}
+/* tarjetas y lotes */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
 .card + .card{margin-top:12px}
 .addline{display:flex;gap:8px;margin-top:12px}
 .addline input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 12px;font-size:16px}
-#copyArea{width:100%;margin-top:10px;font-size:14px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;min-height:100px}
+.row .lots{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+.summary .lr{display:flex;align-items:center;gap:8px;flex:none}
+.mini{border:1px solid color-mix(in srgb, var(--bg) 40%, transparent);background:none;color:var(--bg);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:700;min-height:32px}
+.mini[data-confirm]{background:var(--danger);border-color:var(--danger);color:#fff}
+.sugs{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;min-width:0;margin-top:-4px}
+.sugs:empty{display:none}
+.sugs-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.sugs-in::-webkit-scrollbar{display:none}
+.sug{flex:none;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:7px 11px;text-align:left;display:flex;flex-direction:column;gap:1px;max-width:210px}
+.sug b{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug small{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.lotbox{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;min-width:0}
+#lots{display:flex;flex-direction:column;gap:8px}
+.lot{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 10px;background:var(--bg)}
+.lot .field input{background:var(--surface)}
+.lot .lact{grid-column:1/-1;display:flex;gap:18px;flex-wrap:wrap}
+.lot.gone{background:var(--sunk)}
+.lot.gone .fate{grid-column:1/-1;font-weight:700;font-size:13.5px}
+.linkbtn.danger{color:var(--danger)}
+.copyarea{width:100%;min-height:140px;margin-top:12px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;font-size:15px}
+.hlist{list-style:none;margin:12px 0 0;padding:0}
+.hlist li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.hlist li span{min-width:0}
+.hlist small{display:block;color:var(--muted);font-size:12.5px}
+
+/* aviso de caducidad fijo arriba */
+.alert{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;width:100%;margin-top:12px;display:flex;align-items:center;gap:4px;border:1px solid currentColor;border-radius:14px;padding:4px 4px 4px 12px;box-shadow:0 4px 14px rgba(26,33,23,.12)}
+.alert .amain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:none;border:0;color:inherit;text-align:left;padding:6px 0}
+.alert .x{flex:none;width:44px;height:44px;border:0;background:none;color:inherit;border-radius:10px;font-size:18px;font-weight:700}
+.alert .x:hover{background:color-mix(in srgb, currentColor 12%, transparent)}
+.alert.warn{background:var(--warn-soft);color:var(--warn)}
+.alert.bad{background:var(--danger-soft);color:var(--danger)}
+.alert svg{width:24px;height:24px;flex:none}
+.alert .at{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.alert b{font-size:14.5px}
+.alert .al{color:var(--ink);font-size:13px;overflow-wrap:anywhere}
+.alert .al span{color:var(--muted)}
+.alert .go{font-size:22px;font-weight:700;flex:none}
+.summary{scroll-margin-top:110px}
+
+/* estadísticas */
+#sPer{margin-top:12px}
+.statbig{font-family:var(--f-display);font-weight:800;font-size:34px;letter-spacing:-.02em;margin:14px 0 0;line-height:1.1}
+.sblk{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.bar{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13.5px}
+.bar .bl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .bt{height:10px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.bar .bt i{display:block;height:100%;background:var(--warn);border-radius:99px}
+.bar .bv{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px}
 
 /* recetas */
 .sect{margin-top:22px;display:flex;flex-direction:column;gap:10px}
@@ -163,7 +212,7 @@ h2{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0;text-wra
 
 /* navegación */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:0 max(8px, env(safe-area-inset-right, 0px)) env(safe-area-inset-bottom, 0px) max(8px, env(safe-area-inset-left, 0px));z-index:6}
-.tabs-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);height:var(--nav-h)}
+.tabs-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);height:var(--nav-h)}
 .tab{background:none;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600;color:var(--muted);position:relative}
 .tab svg{width:24px;height:24px}
 .tab[aria-current="page"]{color:var(--accent)}
@@ -203,9 +252,7 @@ nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border
 <main class="wrap" id="app"><p class="sub" style="padding:30px 0;text-align:center">Cargando…</p></main>
 <nav class="tabs" id="nav" aria-label="Secciones" hidden><div class="tabs-in">
   <button class="tab" data-tab="despensa" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18M3 20h18"/><rect x="5" y="4" width="4" height="7" rx="1"/><rect x="11.5" y="6" width="5" height="5" rx="1"/><path d="M6.5 20v-5h3v5M14 20v-3.5a2 2 0 0 1 4 0V20"/></svg>Despensa<span class="badge warn" id="b-despensa" hidden></span></button>
-  <button class="tab" data-tab="lista" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.5 8H6"/><circle cx="10" cy="20.5" r="1.2"/><circle cx="17" cy="20.5" r="1.2"/></svg>Lista<span class="badge" id="b-lista" hidden></span></button>
   <button class="tab" data-tab="recetas" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v1.5A7.5 7.5 0 0 1 12.5 20h-1A7.5 7.5 0 0 1 4 12.5V11Z"/><path d="M2 11h2M20 11h2M9.5 7.5c0-1.6 1-1.6 1-3.2M13.5 7.5c0-1.6 1-1.6 1-3.2"/></svg>Recetas<span class="badge warn" id="b-recetas" hidden></span></button>
-  <button class="tab" data-tab="hogar" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 9.5V20h14V9.5"/><circle cx="12" cy="13" r="2"/><path d="M8.8 20a3.2 3.2 0 0 1 6.4 0"/></svg>Hogar</button>
 </div></nav>
 <div id="sheetRoot"></div>
 <div class="toast off" id="toast" role="status" aria-live="polite"></div>
